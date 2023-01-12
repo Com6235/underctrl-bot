@@ -1,8 +1,9 @@
 const { Configuration, OpenAIApi } = require('openai');
+const { chatBotChannel } = require('../../../config.json');
 
 module.exports = async (client, message) => {
   if (message.author.bot) return;
-  if (message.channel.id !== '1063031078174081064') return;
+  if (message.channel.id !== chatBotChannel) return;
 
   message.channel.sendTyping();
 
