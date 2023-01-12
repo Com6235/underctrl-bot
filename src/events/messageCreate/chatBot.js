@@ -21,13 +21,13 @@ module.exports = async (client, message) => {
   const result = await openai.createCompletion({
     model: 'text-curie-001',
     prompt: message.content,
-    max_tokens: 50,
+    max_tokens: 100,
   });
 
   if (result.data.choices[0].finish_reason === 'length') {
     message.reply(
       result.data.choices[0].text +
-        "... (had to stop so Under Ctrl doesn't end up broke.)"
+        '... (it costs Under Ctrl much more for longer responses.)'
     );
   } else {
     message.reply(result.data.choices[0].text);
