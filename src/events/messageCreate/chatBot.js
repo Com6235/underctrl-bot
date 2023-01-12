@@ -21,7 +21,7 @@ module.exports = async (client, message) => {
   const result = await openai.createCompletion({
     model: 'text-curie-001',
     prompt: message.content,
-    max_tokens: 100,
+    max_tokens: 200,
   });
 
   if (result.data.choices[0].finish_reason === 'length') {
