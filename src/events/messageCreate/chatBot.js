@@ -19,9 +19,9 @@ module.exports = async (client, message) => {
   const openai = new OpenAIApi(configuration);
 
   const result = await openai.createCompletion({
-    model: 'text-ada-001',
+    model: 'text-curie-001',
     prompt: message.content,
-    max_tokens: 20,
+    max_tokens: 50,
   });
 
   if (result.data.choices[0].finish_reason === 'length') {
