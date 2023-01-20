@@ -42,12 +42,11 @@ module.exports = async (client, message) => {
 
   const result = await openai.createCompletion({
     model: 'text-davinci-003',
-    prompt: `ChatGPT is a friendly chatbot.
-             Any code that ChatGPT writes must be in markdown format.
+    prompt: `${client.user.username} is a friendly chatbot. It was created by Avraj by making use of OpenAI's Davinci Model.
 
-             ChatGPT: Hello, how can I help you?
+             ${client.user.username}: Hello, how can I help you?
              ${conversationLog}
-             ChatGPT: 
+             ${client.user.username}: 
              `,
     max_tokens: 256,
   });
