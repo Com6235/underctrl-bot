@@ -48,8 +48,7 @@ module.exports = async (client, message) => {
              ${conversationLog}
              ChatGPT: 
              `,
-    temperature: 0.9,
-    max_tokens: 300,
+    max_tokens: 256,
   });
 
   if (result.data.choices[0].finish_reason === 'length') {
