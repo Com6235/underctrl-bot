@@ -34,7 +34,9 @@ module.exports = async (client, message) => {
 
   prevMessages.forEach((msg) => {
     if (msg.author.id === message.author.id || msg.author.id === client.user.id) {
-      conversationLog += `${msg.author.username}: ${msg.content}\n`;
+      if (!msg.content.startsWith('!')) {
+        conversationLog += `${msg.author.username}: ${msg.content}\n`;
+      }
     }
   });
 
