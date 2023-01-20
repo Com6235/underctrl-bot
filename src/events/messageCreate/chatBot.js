@@ -12,7 +12,7 @@ const { chatBotChannel } = require('../../../config.json');
 module.exports = async (client, message) => {
   if (message.author.bot) return;
   if (message.channel.id !== chatBotChannel) return;
-  if (!message.content.startsWith('!')) return;
+  if (message.content.startsWith('!')) return;
 
   await message.channel.sendTyping();
 
