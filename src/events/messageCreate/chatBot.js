@@ -40,8 +40,6 @@ module.exports = async (client, message) => {
     }
   });
 
-  console.log(conversationLog);
-
   const result = await openai.createCompletion({
     model: 'text-davinci-003',
     prompt: `ChatGPT is a friendly chatbot.
