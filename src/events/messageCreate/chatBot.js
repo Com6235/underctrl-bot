@@ -27,7 +27,7 @@ module.exports = async (client, message) => {
   });
   const openai = new OpenAIApi(configuration);
 
-  let prevMessages = await message.channel.messages.fetch({ limit: 50 });
+  let prevMessages = await message.channel.messages.fetch({ limit: 25 });
   prevMessages = prevMessages.sort((a, b) => a - b);
 
   let conversationLog = '';
