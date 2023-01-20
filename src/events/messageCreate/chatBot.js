@@ -9,6 +9,8 @@ const { chatBotChannel } = require('../../../config.json');
  * @returns
  */
 
+const msgLengthLimit = 300;
+
 module.exports = async (client, message) => {
   if (message.author.bot) return;
   if (message.channel.id !== chatBotChannel) return;
@@ -16,7 +18,7 @@ module.exports = async (client, message) => {
 
   await message.channel.sendTyping();
 
-  if (message.content.length > 300) {
+  if (message.content.length > msgLengthLimit) {
     message.reply("Whoa now, I'm not going to read all that. Maybe summarize?");
     return;
   }
@@ -33,10 +35,12 @@ module.exports = async (client, message) => {
   let conversationLog = '';
 
   prevMessages.forEach((msg) => {
+    if (msg.content.length > msgLengthLimit) return;
+
     if (msg.author.id === message.author.id || msg.author.id === client.user.id) {
-      if (!msg.content.startsWith('!')) {
-        conversationLog += `${msg.author.username}: ${msg.content}\n`;
-      }
+      if (msg.content.startsWith('!')) return;
+
+      conversationLog += `${msg.author.username}: ${msg.content}\n`;
     }
   });
 
