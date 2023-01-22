@@ -29,14 +29,14 @@ module.exports = {
     const threadOwner = starterMessage?.author;
 
     if (interaction.member.permissions.has(PermissionFlagsBits.ManageChannels) || interaction.member.id === threadOwner.id) {
-      if (interaction.channel.appliedTags?.includes(solvedTagId) && interaction.channel.archived) {
-        interaction.editReply('This thread is already marked as solved.');
-        return;
-      }
-
       try {
-        await interaction.channel.setAppliedTags([...interaction.channel.appliedTags, solvedTagId]);
+        if (interaction.channel.appliedTags?.includes(solvedTagId)) {
+          await interaction.editReply('This thread has been archived again as it had previously been marked as solved.');
+          await interaction.channel.setArchived(true);
+          return;
+        }
 
+        await interaction.channel.setAppliedTags([...interaction.channel.appliedTags, solvedTagId]);
         const messageAmount = interaction.channel.messageCount;
 
         await interaction.editReply(`${checkEmoji} ${threadOwner ? `${threadOwner}` : ''} Marked thread as solved after ${messageAmount} messages.`);
