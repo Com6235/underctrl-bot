@@ -29,7 +29,7 @@ module.exports = {
     const threadOwner = starterMessage?.author;
 
     if (interaction.member.permissions.has(PermissionFlagsBits.ManageChannels) || interaction.member.id === threadOwner.id) {
-      if (interaction.channel.appliedTags?.includes(solvedTagId)) {
+      if (interaction.channel.appliedTags?.includes(solvedTagId) && interaction.channel.archived) {
         interaction.editReply('This thread is already marked as solved.');
         return;
       }
