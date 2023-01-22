@@ -25,9 +25,6 @@ module.exports = {
 
     await interaction.deferReply();
 
-    const starterMessage = await interaction.channel.fetchStarterMessage();
-    const threadOwner = starterMessage?.author;
-
     if (interaction.member.permissions.has(PermissionFlagsBits.ManageChannels) || interaction.member.id === threadOwner.id) {
       try {
         if (interaction.channel.appliedTags?.includes(solvedTagId)) {
@@ -39,8 +36,18 @@ module.exports = {
         await interaction.channel.setAppliedTags([...interaction.channel.appliedTags, solvedTagId]);
         const messageAmount = interaction.channel.messageCount;
 
-        await interaction.editReply(`${checkEmoji} ${threadOwner ? `${threadOwner}` : ''} Marked thread as solved after ${messageAmount} messages.`);
+        let threadOwner;
+        let starterMessage;
 
+        try {
+          starterMessage = await interaction.channel.fetchStarterMessage();
+        } catch (error) {}
+
+        if (starterMessage) {
+          threadOwner = starterMessage.author;
+        }
+
+        await interaction.editReply(`${checkEmoji} ${threadOwner ? `${threadOwner}` : ''} Marked thread as solved after ${messageAmount} messages.`);
         await interaction.channel.setArchived(true);
       } catch (error) {
         console.log(`There was an error marking this thread as solved. ${error}`);
