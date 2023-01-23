@@ -25,7 +25,18 @@ module.exports = {
 
     await interaction.deferReply();
 
-    if (interaction.member.permissions.has(PermissionFlagsBits.ManageChannels) || interaction.member.id === threadOwner.id) {
+    let threadOwner;
+    let starterMessage;
+
+    try {
+      starterMessage = await interaction.channel.fetchStarterMessage();
+    } catch (error) {}
+
+    if (starterMessage) {
+      threadOwner = starterMessage.author;
+    }
+
+    if (interaction.member.permissions.has(PermissionFlagsBits.ManageChannels) || interaction.member.id === threadOwner?.id) {
       try {
         if (interaction.channel.appliedTags?.includes(solvedTagId)) {
           await interaction.editReply('This thread has been archived again as it had previously been marked as solved.');
@@ -35,17 +46,6 @@ module.exports = {
 
         await interaction.channel.setAppliedTags([...interaction.channel.appliedTags, solvedTagId]);
         const messageAmount = interaction.channel.messageCount;
-
-        let threadOwner;
-        let starterMessage;
-
-        try {
-          starterMessage = await interaction.channel.fetchStarterMessage();
-        } catch (error) {}
-
-        if (starterMessage) {
-          threadOwner = starterMessage.author;
-        }
 
         await interaction.editReply(`${checkEmoji} ${threadOwner ? `${threadOwner}` : ''} Marked thread as solved after ${messageAmount} messages.`);
         await interaction.channel.setArchived(true);
