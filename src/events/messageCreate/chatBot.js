@@ -46,13 +46,13 @@ module.exports = async (client, message) => {
 
   const result = await openai.createCompletion({
     model: 'text-davinci-003',
-    prompt: `${client.user.username} is a friendly chatbot. It was created by Avraj by making use of OpenAI's Davinci Model.
+    prompt: `${client.user.username} is a friendly chatbot.
 
              ${client.user.username}: Hello, how can I help you?
              ${conversationLog}
-             ${client.user.username}: 
+             ${client.user.username}:
              `,
-    max_tokens: 256,
+    max_tokens: 200,
   });
 
   if (result.data.choices[0].finish_reason === 'length') {
