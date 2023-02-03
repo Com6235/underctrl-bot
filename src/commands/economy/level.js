@@ -6,7 +6,7 @@ const {
 } = require('discord.js');
 const canvacord = require('canvacord');
 const Level = require('../../models/Level');
-const getCurrentLevelXp = require('../../utils/getCurrentLevelXp');
+const calculateLevelXp = require('../../utils/calculateLevelXp');
 
 module.exports = {
   /**
@@ -43,8 +43,6 @@ module.exports = {
       return;
     }
 
-    const currentLevelXp = getCurrentLevelXp(fetchedLevel.level);
-
     // setup user rank
     let allLevels = await Level.find({ guildId: interaction.guild.id }).select('userId level xp');
     allLevels = allLevels.sort((a, b) => (b.level > a.level ? 1 : -1));
@@ -58,7 +56,7 @@ module.exports = {
       .setRank(currentRank)
       .setLevel(fetchedLevel.level)
       .setCurrentXP(fetchedLevel.xp)
-      .setRequiredXP(currentLevelXp)
+      .setRequiredXP(calculateLevelXp(fetchedLevel.level))
       .setStatus(targetUserObj.presence.status)
       .setProgressBar('#FFFFFF', 'COLOR')
       .setUsername(targetUserObj.user.username)
