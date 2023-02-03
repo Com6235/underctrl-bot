@@ -46,7 +46,7 @@ module.exports = {
     // setup user rank
     let allLevels = await Level.find({ guildId: interaction.guild.id }).select('userId level xp');
 
-    allLevels = allLevels.sort((a, b) => {
+    allLevels.sort((a, b) => {
       if (a.level === b.level) {
         return b.xp - a.xp;
       } else {
