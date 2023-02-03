@@ -13,6 +13,7 @@ const client = new Client({
 });
 
 (async () => {
+  mongoose.set('strictQuery', false);
   await mongoose.connect(process.env.MONGODB_URI).catch((e) => {
     throw new Error(`Error connecting to DB: ${e}`);
   });
