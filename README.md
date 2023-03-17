@@ -24,6 +24,8 @@ npm install
 yarn
 ```
 
+---
+
 3. Create the files `.env` and `config.json` and fill them with relevant information. Required information is given in their corresponding example files.
 
 ---
