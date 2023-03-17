@@ -1,12 +1,11 @@
 const { Client, Message, EmbedBuilder } = require('discord.js');
-const { suggestionsChannel, devs } = require('../../../config.json');
+const { suggestionsChannel, devs } = require('../../config.json');
 
 /**
  *
- * @param { Client } client
  * @param { Message } message
  */
-module.exports = async (client, message) => {
+module.exports = async (message) => {
   if (message.author.bot) return;
   if (message.channel.id !== suggestionsChannel) return;
   if (devs.includes(message.author.id)) return;
@@ -20,5 +19,5 @@ module.exports = async (client, message) => {
   const reply = await message.channel.send({ embeds: [embed] });
 
   await reply.react('👍');
-  reply.react('👎');
+  await reply.react('👎');
 };

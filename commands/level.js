@@ -1,21 +1,10 @@
-const {
-  Client,
-  Interaction,
-  ApplicationCommandOptionType,
-  AttachmentBuilder,
-} = require('discord.js');
+const { AttachmentBuilder, SlashCommandBuilder } = require('discord.js');
 const canvacord = require('canvacord');
-const Level = require('../../models/Level');
-const calculateLevelXp = require('../../utils/calculateLevelXp');
+const Level = require('../models/Level');
+const calculateLevelXp = require('../utils/calculate-level-xp');
 
 module.exports = {
-  /**
-   *
-   * @param {Client} client
-   * @param {Interaction} interaction
-   */
-
-  callback: async (client, interaction) => {
+  run: async ({ interaction }) => {
     if (!interaction.inGuild()) {
       interaction.reply('You can only run this command inside a server.');
       return;
@@ -43,7 +32,7 @@ module.exports = {
       return;
     }
 
-    // setup user rank
+    // Determine user rank
     let allLevels = await Level.find({ guildId: interaction.guild.id }).select('userId level xp');
 
     allLevels.sort((a, b) => {
@@ -56,7 +45,7 @@ module.exports = {
 
     let currentRank = allLevels.findIndex((lvl) => lvl.userId === targetUserId) + 1;
 
-    // send level card
+    // Send level card
     const rank = new canvacord.Rank()
       .setAvatar(targetUserObj.user.displayAvatarURL({ size: 256 }))
       .setRank(currentRank)
@@ -73,13 +62,11 @@ module.exports = {
     interaction.editReply({ files: [attachment] });
   },
 
-  name: 'level',
-  description: "Get yours/someone's level.",
-  options: [
-    {
-      name: 'target-user',
-      description: 'The user whose level you want to see.',
-      type: ApplicationCommandOptionType.Mentionable,
-    },
-  ],
+  // <---- COMMAND INFO ---->
+  data: new SlashCommandBuilder()
+    .setName('level')
+    .setDescription("Get yours/someone's level")
+    .addUserOption((option) =>
+      option.setName('target-user').setDescription('The user whose level you want to see')
+    ),
 };

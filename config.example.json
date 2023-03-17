@@ -1,8 +1,9 @@
 {
   "testServer": "",
   "suggestionsChannel": "",
+  "helpForumId": "",
   "solvedTagId": "",
-  "devs": [""],
   "helperRoleId": "",
-  "emojis": [{ "checkEmoji": "" }]
+  "devs": [""],
+  "emojis": { "checkEmoji": "" }
 }
