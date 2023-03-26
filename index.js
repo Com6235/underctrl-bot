@@ -1,19 +1,11 @@
 require('dotenv/config');
-const { Client, IntentsBitField } = require('discord.js');
+const { Client } = require('discord.js');
 const { CommandHandler } = require('djs-commander');
 const { testServer } = require('./config.json');
 const mongoose = require('mongoose');
 const path = require('path');
 
-const client = new Client({
-  intents: [
-    IntentsBitField.Flags.Guilds,
-    IntentsBitField.Flags.GuildMembers,
-    IntentsBitField.Flags.GuildMessages,
-    IntentsBitField.Flags.GuildPresences,
-    IntentsBitField.Flags.MessageContent,
-  ],
-});
+const client = new Client({ intents: 131071 });
 
 mongoose.connect(process.env.MONGODB_URI).then(() => {
   console.log('Connected to database');
