@@ -245,10 +245,10 @@ discord.js@^14.7.1:
     undici "^5.20.0"
     ws "^8.12.1"
 
-djs-commander@^0.0.43:
-  version "0.0.43"
-  resolved "https://registry.yarnpkg.com/djs-commander/-/djs-commander-0.0.43.tgz#79909722c3a7594a6ce93cdf9b7d1049342ddd74"
-  integrity sha512-D4Dg5Z1daplKaVDRnrir5BxotQpUKVGwDOZwYDvciEYL2O3X4AEHhp6xhx3zv6Nnekv8Y0S6XPn9uq9r7LwsGQ==
+djs-commander@^0.0.44:
+  version "0.0.44"
+  resolved "https://registry.yarnpkg.com/djs-commander/-/djs-commander-0.0.44.tgz#9e7be47473db1562565b7afeae9360e1463ca680"
+  integrity sha512-Jxltt9aZUwTJU1CjwicBlI3Ryb4ik12BtfP2qIb71P2G+/b7deMQZnsq7fx0jjCS7X3gQemcOWqH1UrNrEVZ5w==
 
 dotenv@^16.0.3:
   version "16.0.3"
