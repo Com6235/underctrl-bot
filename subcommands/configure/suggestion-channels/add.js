@@ -16,7 +16,11 @@ module.exports = async (interaction) => {
       guildConfig = await createGuildConfig(interaction.guildId);
     }
 
-    if (!guildConfig.modules?.suggestions) {
+    const suggestionsModuleEnabled = guildConfig.modules.find(
+      (mod) => mod.name === 'suggestion'
+    )?.enabled;
+
+    if (!suggestionsModuleEnabled) {
       await interaction.editReply('The suggestions module has been disabled for this server.');
       return;
     }
