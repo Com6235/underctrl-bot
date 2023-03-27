@@ -16,19 +16,15 @@ module.exports = async (interaction) => {
       guildConfig = await createGuildConfig(interaction.guildId);
     }
 
-    const suggestionsModuleEnabled = guildConfig.modules.find(
-      (mod) => mod.name === 'suggestions'
-    )?.enabled;
+    const suggestionsModuleEnabled = guildConfig.modules.find((mod) => mod.name === 'suggestions')?.enabled;
 
     if (!suggestionsModuleEnabled) {
-      await interaction.editReply('The suggestions module has been disabled for this server.');
+      await interaction.editReply('The suggestions module has been disabled for this server.\nRun `/module enable suggestions` to enable it.');
       return;
     }
 
     if (!guildConfig.suggestionChannels?.length) {
-      await interaction.editReply(
-        'No suggestion channels have been set... yet.\nRun `/configure suggestion-channels add` to add one.'
-      );
+      await interaction.editReply('No suggestion channels have been set... yet.\nRun `/configure suggestion-channels add` to add one.');
       return;
     }
 

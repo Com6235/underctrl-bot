@@ -39,7 +39,7 @@ module.exports = {
   // Command structure
   data: {
     name: 'configure',
-    description: 'Update my configuration.',
+    description: 'Configure bot settings.',
     options: [
       {
         name: 'suggestion-channels',
@@ -64,6 +64,21 @@ module.exports = {
                 description: 'The channel to add.',
                 type: ApplicationCommandOptionType.Channel,
                 required: true,
+              },
+              {
+                name: 'embed-color',
+                description: 'The color you want suggestion embeds to be.',
+                type: ApplicationCommandOptionType.String,
+              },
+              {
+                name: 'upvote-reaction',
+                description: 'The reaction emoji you want the suggestion to get.',
+                type: ApplicationCommandOptionType.String,
+              },
+              {
+                name: 'downvote-reaction',
+                description: 'The reaction emoji you want the suggestion to get.',
+                type: ApplicationCommandOptionType.String,
               },
             ],
           },

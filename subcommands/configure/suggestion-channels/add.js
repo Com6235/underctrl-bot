@@ -1,4 +1,4 @@
-const { Interaction } = require('discord.js');
+const { Interaction, ChannelType } = require('discord.js');
 const createGuildConfig = require('../../../utils/createGuildConfig');
 const Config = require('../../../models/GuildConfig');
 
@@ -16,25 +16,36 @@ module.exports = async (interaction) => {
       guildConfig = await createGuildConfig(interaction.guildId);
     }
 
-    const suggestionsModuleEnabled = guildConfig.modules.find(
-      (mod) => mod.name === 'suggestions'
-    )?.enabled;
+    const suggestionsModuleEnabled = guildConfig.modules.find((mod) => mod.name === 'suggestions')?.enabled;
 
     if (!suggestionsModuleEnabled) {
-      await interaction.editReply('The suggestions module has been disabled for this server.');
+      await interaction.editReply('The suggestions module has been disabled for this server.\nRun `/module enable suggestions` to enable it.');
       return;
     }
 
     const targetChannel = interaction.options.getChannel('channel');
+    const embedColor = interaction.options.getString('embed-color');
+    const upvoteReaction = interaction.options.getString('upvote-reaction');
+    const downvoteReaction = interaction.options.getString('downvote-reaction');
 
-    if (guildConfig.suggestionChannels.includes(targetChannel.id)) {
-      await interaction.editReply(
-        'This channel already exists in the list of suggestion channels.'
-      );
+    const channelExists = guildConfig.suggestionChannels.find((channel) => channel.id === targetChannel.id);
+
+    if (channelExists) {
+      await interaction.editReply('This channel already exists in the list of suggestion channels.');
       return;
     }
 
-    guildConfig.suggestionChannels.push(targetChannel.id);
+    if (targetChannel.type !== ChannelType.GuildText) {
+      await interaction.editReply('You can only set server text channels as suggestion channels.');
+      return;
+    }
+
+    guildConfig.suggestionChannels.push({
+      id: targetChannel.id,
+      embedColor,
+      upvoteReaction,
+      downvoteReaction,
+    });
 
     await guildConfig.save().catch(async (e) => {
       await interaction.editReply(`There was an error adding this suggestions channel.\n${e}`);
@@ -42,7 +53,6 @@ module.exports = async (interaction) => {
     });
 
     await interaction.editReply(`Channel ${targetChannel} has been set as a suggestions channel.`);
-    return;
   } catch (error) {
     console.log(error);
   }
