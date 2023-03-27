@@ -33,13 +33,13 @@ module.exports = {
   },
 
   data: {
-    name: 'modules',
+    name: 'module',
     description: 'Manage the modules in this server.',
     options: [
       // /modules enable <module>
       {
         name: 'enable',
-        description: 'Enable modules.',
+        description: 'Enable module.',
         type: 1,
         options: [
           {
@@ -55,7 +55,7 @@ module.exports = {
       // /modules disable <module>
       {
         name: 'disable',
-        description: 'Disable modules.',
+        description: 'Disable module.',
         type: 1,
         options: [
           {
