@@ -17,7 +17,7 @@ module.exports = async (interaction) => {
     }
 
     const suggestionsModuleEnabled = guildConfig.modules.find(
-      (mod) => mod.name === 'suggestion'
+      (mod) => mod.name === 'suggestions'
     )?.enabled;
 
     if (!suggestionsModuleEnabled) {
