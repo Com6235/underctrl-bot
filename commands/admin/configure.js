@@ -36,6 +36,7 @@ module.exports = {
     }
   },
 
+  // Command structure
   data: {
     name: 'configure',
     description: 'Update my configuration.',
@@ -45,11 +46,14 @@ module.exports = {
         description: 'Configure suggestion channels.',
         type: 2,
         options: [
+          // /configure suggestion-channels get
           {
             name: 'get',
             description: 'Get a list of all suggestion channels.',
             type: 1,
           },
+
+          // /configure suggestion-channels add <channel>
           {
             name: 'add',
             description: 'Add a suggestion channel.',
@@ -63,6 +67,8 @@ module.exports = {
               },
             ],
           },
+
+          // /configure suggestion-channels remove <channel>
           {
             name: 'remove',
             description: 'Remove a suggestion channel.',
@@ -78,6 +84,8 @@ module.exports = {
           },
         ],
       },
+
+      // /configure help-forum <channel>
       {
         name: 'help-forum',
         description: 'Set help forum.',
@@ -94,6 +102,6 @@ module.exports = {
     ],
   },
 
+  guildOnly: true,
   permissionsRequired: [PermissionFlagsBits.Administrator],
-  devOnly: true,
 };
