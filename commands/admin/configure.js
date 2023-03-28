@@ -91,8 +91,8 @@ module.exports = {
             options: [
               {
                 name: 'channel',
-                description: 'The channel to remove.',
-                type: ApplicationCommandOptionType.Channel,
+                description: 'The channel ID of the channel to remove.',
+                type: ApplicationCommandOptionType.String,
                 required: true,
               },
             ],

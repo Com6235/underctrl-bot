@@ -31,7 +31,7 @@ module.exports = async (interaction) => {
     const channelExists = guildConfig.suggestionChannels.find((channel) => channel.id === targetChannel.id);
 
     if (channelExists) {
-      await interaction.editReply('This channel already exists in the list of suggestion channels.');
+      await interaction.editReply(`Channel ${targetChannel} already exists in the list of suggestion channels.`);
       return;
     }
 
@@ -52,7 +52,7 @@ module.exports = async (interaction) => {
       return;
     });
 
-    await interaction.editReply(`Channel ${targetChannel} has been set as a suggestions channel.`);
+    await interaction.editReply(`Channel ${targetChannel} has been set as a suggestion channel.`);
   } catch (error) {
     console.log(error);
   }
