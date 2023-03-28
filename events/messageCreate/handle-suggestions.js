@@ -1,23 +1,38 @@
-const { Client, Message, EmbedBuilder } = require('discord.js');
-const { suggestionsChannel, devs } = require('../../config.json');
+const { Message, EmbedBuilder } = require('discord.js');
+const GuildConfig = require('../../models/GuildConfig');
+const createGuildConfig = require('../../utils/createGuildConfig');
 
 /**
  *
  * @param { Message } message
  */
 module.exports = async (message) => {
-  if (message.author.bot) return;
-  if (message.channel.id !== suggestionsChannel) return;
-  if (devs.includes(message.author.id)) return;
+  try {
+    if (message.author.bot || message.content.startsWith('!')) return;
 
-  const embed = new EmbedBuilder()
-    .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
-    .setDescription(message.content)
-    .setColor(0xc7a9fe);
+    let guildConfig = await GuildConfig.findOne({ id: message.guildId }).select('suggestionChannels');
 
-  await message.delete();
-  const reply = await message.channel.send({ embeds: [embed] });
+    if (!guildConfig) {
+      guildConfig = await createGuildConfig(message.guildId);
+    }
 
-  await reply.react('👍');
-  await reply.react('👎');
+    const suggestionChannel = guildConfig.suggestionChannels.find((channel) => channel.id === message.channelId);
+
+    if (!suggestionChannel) return;
+
+    const embed = new EmbedBuilder({
+      author: { name: message.author.tag, iconURL: message.author.displayAvatarURL() },
+      description: message.content,
+      ...(suggestionChannel.embedColor && { color: suggestionChannel.embedColor }),
+    });
+
+    await message.delete();
+
+    const reply = await message.channel.send({ embeds: [embed] });
+
+    await reply.react(suggestionChannel.upvoteReaction || '👍');
+    await reply.react(suggestionChannel.downvoteReaction || '👎');
+  } catch (error) {
+    console.log(error);
+  }
 };

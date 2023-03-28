@@ -2,6 +2,9 @@ const { Interaction, ChannelType } = require('discord.js');
 const createGuildConfig = require('../../../utils/createGuildConfig');
 const Config = require('../../../models/GuildConfig');
 
+// Regular expression for a valid hex color code
+const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+
 /**
  *
  * @param {Interaction} interaction
@@ -24,7 +27,7 @@ module.exports = async (interaction) => {
     }
 
     const targetChannel = interaction.options.getChannel('channel');
-    const embedColor = interaction.options.getString('embed-color');
+    let embedColor = interaction.options.getString('embed-color');
     const upvoteReaction = interaction.options.getString('upvote-reaction');
     const downvoteReaction = interaction.options.getString('downvote-reaction');
 
@@ -39,6 +42,14 @@ module.exports = async (interaction) => {
       await interaction.editReply('You can only set server text channels as suggestion channels.');
       return;
     }
+
+    if (!hexColorRegex.test(embedColor)) {
+      await interaction.editReply('Invalid embed color code. Please use a valid hex color code.');
+      return;
+    }
+
+    embedColor = parseInt(embedColor.replace('#', ''), 16);
+    console.log(embedColor);
 
     guildConfig.suggestionChannels.push({
       id: targetChannel.id,

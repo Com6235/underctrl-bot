@@ -33,7 +33,7 @@ const guildConfigSchema = new Schema(
     suggestionChannels: [
       new Schema({
         id: { type: String, required: true },
-        embedColor: String,
+        embedColor: Number,
         upvoteReaction: String,
         downvoteReaction: String,
       }),
