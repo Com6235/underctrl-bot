@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const guildConfigSchema = new Schema(
   {
-    id: { type: String, required: true },
+    id: { type: String, required: true, unique: true },
     adminRoles: [String],
     modRoles: [String],
     helperRoles: [String],

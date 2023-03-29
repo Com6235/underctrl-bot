@@ -16,12 +16,16 @@ module.exports = async (interaction) => {
       guildConfig = createGuildConfig(interaction.guildId);
     }
 
-    const targetChannelId = interaction.options.getString('channel');
+    const targetChannelId = interaction.options.getString('channel-id');
 
-    const channelIndex = guildConfig.suggestionChannels.findIndex((channel) => channel.id === targetChannelId);
+    const channelIndex = guildConfig.suggestionChannels.findIndex(
+      (channel) => channel.id === targetChannelId
+    );
 
     if (channelIndex === -1) {
-      await interaction.editReply(`Channel <#${targetChannelId}> is not in the list of suggestion channels.`);
+      await interaction.editReply(
+        `Channel <#${targetChannelId}> is not in the list of suggestion channels.`
+      );
       return;
     }
 
@@ -32,7 +36,9 @@ module.exports = async (interaction) => {
       return;
     });
 
-    await interaction.editReply(`Channel <#${targetChannelId}> has been removed from the list of suggestion channels.`);
+    await interaction.editReply(
+      `Channel <#${targetChannelId}> has been removed from the list of suggestion channels.`
+    );
   } catch (error) {
     console.log(error);
   }

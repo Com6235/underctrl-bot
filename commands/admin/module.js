@@ -8,6 +8,10 @@ const choices = [
     value: 'suggestions',
   },
   {
+    name: 'help-forums',
+    value: 'help-forums',
+  },
+  {
     name: 'faq',
     value: 'faq',
   },

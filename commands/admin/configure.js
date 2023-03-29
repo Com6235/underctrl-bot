@@ -2,7 +2,8 @@ const { Interaction, ApplicationCommandOptionType, PermissionFlagsBits } = requi
 const suggestionChannelsGet = require('../../subcommands/configure/suggestion-channels/get');
 const suggestionChannelsAdd = require('../../subcommands/configure/suggestion-channels/add');
 const suggestionChannelsRemove = require('../../subcommands/configure/suggestion-channels/remove');
-const helpForum = require('../../subcommands/configure/help-forum');
+const helpForumsAdd = require('../../subcommands/configure/help-forums/add');
+const helpForumsRemove = require('../../subcommands/configure/help-forums/remove');
 
 module.exports = {
   /**
@@ -14,25 +15,40 @@ module.exports = {
     const subcommand = interaction.options.getSubcommand();
 
     switch (subcommandGroup) {
+      // subcommandGroup "suggestion-channels"
+      // /configure suggestion-channels
       case 'suggestion-channels':
         switch (subcommand) {
+          // /configure suggestion-channels get
           case 'get':
-            await suggestionChannelsGet(interaction, client);
+            await suggestionChannelsGet(interaction);
             break;
 
+          // /configure suggestion-channels add
           case 'add':
-            await suggestionChannelsAdd(interaction, client);
+            await suggestionChannelsAdd(interaction);
             break;
 
+          // /configure suggestion-channels remove
           case 'remove':
-            await suggestionChannelsRemove(interaction, client);
+            await suggestionChannelsRemove(interaction);
             break;
         }
-        break;
 
-      case 'help-forum':
-        await helpForum(interaction, client);
-        break;
+      // subcommandGroup "help-forums"
+      // /configure help-forums
+      case 'help-forums':
+        switch (subcommand) {
+          // /configure help-forums add
+          case 'add':
+            await helpForumsAdd(interaction);
+            break;
+
+          // /configure help-forums remove
+          case 'remove':
+            await helpForumsRemove(interaction);
+            break;
+        }
     }
   },
 
@@ -90,8 +106,8 @@ module.exports = {
             type: 1,
             options: [
               {
-                name: 'channel',
-                description: 'The channel ID of the channel to remove.',
+                name: 'channel-id',
+                description: 'The ID of the channel to remove.',
                 type: ApplicationCommandOptionType.String,
                 required: true,
               },
@@ -102,15 +118,43 @@ module.exports = {
 
       // /configure help-forum <channel>
       {
-        name: 'help-forum',
-        description: 'Set help forum.',
-        type: 1,
+        name: 'help-forums',
+        description: 'Configure help forum settings.',
+        type: 2,
         options: [
+          // /configure help-forums add <channel> [solved-tag-id]
           {
-            name: 'channel',
-            description: 'The channel to set as the help channel.',
-            type: ApplicationCommandOptionType.Channel,
-            required: true,
+            name: 'add',
+            description: 'Add a help forum channel',
+            type: 1,
+            options: [
+              {
+                name: 'channel',
+                description: 'The forum channel to use as a help channel.',
+                type: ApplicationCommandOptionType.Channel,
+                required: true,
+              },
+              {
+                name: 'solved-tag-id',
+                description: 'The ID of the tag you want to add once a thread has been solved.',
+                type: ApplicationCommandOptionType.String,
+              },
+            ],
+          },
+
+          // /configure help-forums remove <channel-id>
+          {
+            name: 'remove',
+            description: 'Remove a help forum channel',
+            type: 1,
+            options: [
+              {
+                name: 'channel-id',
+                description: 'The ID of the forum channel to remove.',
+                type: ApplicationCommandOptionType.String,
+                required: true,
+              },
+            ],
           },
         ],
       },

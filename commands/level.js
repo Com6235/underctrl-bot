@@ -5,11 +5,6 @@ const calculateLevelXp = require('../utils/calculate-level-xp');
 
 module.exports = {
   run: async ({ interaction }) => {
-    if (!interaction.inGuild()) {
-      interaction.reply('You can only run this command inside a server.');
-      return;
-    }
-
     await interaction.deferReply();
 
     const mentionedUserId = interaction.options.get('target-user')?.value;
@@ -69,4 +64,6 @@ module.exports = {
     .addUserOption((option) =>
       option.setName('target-user').setDescription('The user whose level you want to see')
     ),
+
+  guildOnly: true,
 };
