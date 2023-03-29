@@ -85,7 +85,7 @@ module.exports = {
       await interaction.editReply(
         `:white_check_mark: ${
           threadOwner ? threadOwner : ''
-        } Marked thread as closed after ${messageAmount} messages.`
+        } Marked thread as solved after ${messageAmount} messages.`
       );
       await interaction.channel.setArchived(true);
     } catch (error) {
