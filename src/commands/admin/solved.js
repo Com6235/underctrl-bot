@@ -39,7 +39,7 @@ module.exports = {
     if (
       interaction.member.permissions.has(PermissionFlagsBits.ManageChannels) ||
       interaction.member.id === threadOwner?.id ||
-      interaction.member.roles.cache.has((role) => role.id === helperRole)
+      interaction.member.roles.cache.some((role) => role.id === helperRole)
     ) {
       try {
         if (interaction.channel.appliedTags?.includes(solvedTagId)) {
