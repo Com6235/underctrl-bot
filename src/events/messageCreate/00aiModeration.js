@@ -1,4 +1,5 @@
 const { Client, Message, EmbedBuilder, WebhookClient } = require('discord.js');
+const { Configuration, OpenAIApi } = require('openai');
 
 // OpenAI setup
 const configuration = new Configuration({ apiKey: process.env.OPENAI_SECRET });
