@@ -11,6 +11,8 @@ if (process.env.LOGS_WEBHOOK_URL) {
   webhookClient = new WebhookClient({ url: process.env.LOGS_WEBHOOK_URL });
 }
 
+const embedColor = 0xff4343;
+
 /**
  *
  * @param {Client} client
