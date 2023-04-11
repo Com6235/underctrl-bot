@@ -13,7 +13,7 @@
   "dependencies": {
     "canvacord": "^5.4.8",
     "discord.js": "^14.7.1",
-    "djs-commander": "^0.0.44",
+    "djs-commander": "^0.0.45",
     "dotenv": "^16.0.3",
     "mongoose": "^7.0.2",
     "openai": "^3.2.1"

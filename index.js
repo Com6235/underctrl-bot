@@ -19,9 +19,4 @@ new CommandHandler({
   testServer,
 });
 
-const token =
-  process.env.NODE_ENV === 'production'
-    ? process.env.PRODUCTION_TOKEN
-    : process.env.DEVELOPMENT_TOKEN;
-
-client.login(token);
+client.login(process.env.TOKEN);
