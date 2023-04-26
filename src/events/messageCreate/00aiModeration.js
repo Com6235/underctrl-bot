@@ -36,7 +36,7 @@ module.exports = async (client, message) => {
           description: `A message sent in ${message.channel} couldn't be moderated due to a failed request to OpenAI.`,
           fields: [
             { name: 'Sent by', value: `${message.author.tag}\n\`${message.author.id}\`` },
-            { name: 'Message', value: `${(await translatedContent).text}` },
+            { name: 'Message', value: message.content },
             { name: 'Error', value: `${error}` },
           ],
         });
