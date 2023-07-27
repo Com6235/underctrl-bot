@@ -24,7 +24,7 @@ module.exports = async (client, message) => {
     if (message.author.bot || message.content.length < 4) {
       return;
     }
-    var translatedContent = translator(message.content)
+    var translatedContent = translator(message.content, { to: `English` })
     const response = await openai
       .createModeration({ input: translatedContent })
       .catch(async (error) => {
