@@ -1,6 +1,5 @@
 const { Client, Message, EmbedBuilder, WebhookClient } = require('discord.js');
 const { Configuration, OpenAIApi } = require('openai');
-const translator = require("@iamtraction/google-translate")
 
 // OpenAI setup
 const configuration = new Configuration({ apiKey: process.env.OPENAI_SECRET });
@@ -24,9 +23,8 @@ module.exports = async (client, message) => {
     if (message.author.bot || message.content.length < 4) {
       return;
     }
-    var translatedContent = translator(message.content, { to: `English` })
     const response = await openai
-      .createModeration({ input: translatedContent })
+      .createModeration({ input: message.content })
       .catch(async (error) => {
         // Log for staff/admins using webhook (if it exists)
         if (!webhookClient) return;
